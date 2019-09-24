@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
@@ -9,10 +9,7 @@
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "prepublish": "yarn build"
   },
-  "dependencies": {
-    "@pefish/js-error": "^0.1.1",
-    "@pefish/js-node-assist": "^0.6.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
