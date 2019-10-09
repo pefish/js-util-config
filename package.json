@@ -4,7 +4,7 @@
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
-    "test": "NODE_CONFIG=`pwd`/test/config.yaml NODE_SECRET=`pwd`/test/secret.yaml mocha --require ts-node/register src/*.test.ts",
+    "test": "NODE_CONFIG=`pwd`/test/config.yaml NODE_SECRET=`pwd`/test/secret1.yaml mocha --require ts-node/register src/*.test.ts",
     "build": "rm -rf lib types && tsc && yarn tslint",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "prepublish": "yarn build"
