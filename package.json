@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "js-yaml": "^3.13.1"
   },
   "devDependencies": {
+    "@pefish/js-node-assist": "^0.6.11",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/moment": "^2.13.0",

@@ -1,3 +1,4 @@
+import '@pefish/js-node-assist'
 import Config from './config';
 
 describe('test config', () => {

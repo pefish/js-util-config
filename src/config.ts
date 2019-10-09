@@ -30,7 +30,11 @@ export default class Config {
         configFile = config.configFilePath
       }
       if (configFile) {
-        configData = require(configFile)
+        try {
+          configData = require(configFile)
+        } catch (err) {
+          global.logger.debug(err)
+        }
       }
     }
 
@@ -42,7 +46,11 @@ export default class Config {
         secretFile = config.secretFilePath
       }
       if (secretFile) {
-        secretData = require(secretFile)
+        try {
+          secretData = require(secretFile)
+        } catch (err) {
+          global.logger.debug(err)
+        }
       }
     }
 
@@ -65,7 +73,11 @@ export default class Config {
         configFile = config.configFilePath
       }
       if (configFile) {
-        configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
+        try {
+          configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
+        } catch (err) {
+          global.logger.debug(err)
+        }
       }
     }
 
@@ -77,7 +89,11 @@ export default class Config {
         secretFile = config.secretFilePath
       }
       if (secretFile) {
-        secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
+        try {
+          secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
+        } catch (err) {
+          global.logger.debug(err)
+        }
       }
     }
 
