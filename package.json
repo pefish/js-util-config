@@ -1,15 +1,17 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
-    "test": "mocha --require ts-node/register src/*.test.ts",
+    "test": "NODE_CONFIG=`pwd`/test/config.yaml NODE_SECRET=`pwd`/test/secret.yaml mocha --require ts-node/register src/*.test.ts",
     "build": "rm -rf lib types && tsc && yarn tslint",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "prepublish": "yarn build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-yaml": "^3.13.1"
+  },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",

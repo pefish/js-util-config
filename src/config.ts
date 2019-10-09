@@ -1,4 +1,6 @@
-import * as path from 'path'
+
+import yaml from 'js-yaml'
+import fs from 'fs'
 
 declare global {
   namespace NodeJS {
@@ -8,32 +10,81 @@ declare global {
   }
 }
 
+export interface Configuration {
+  configFilePath?: string
+  secretFilePath?: string
+  configEnvName?: string
+  secretEnvName?: string
+}
+
 export default class Config {
-  static loadConfig (defaultConfigFile: string = null): any {
-    const envNodeConfig = process.env[`NODE_CONFIG`]
-    const envNodeSecret = process.env['NODE_SECRET']
-    if (envNodeConfig || envNodeSecret) {
-      let config = {}
-      try {
-        config = require(envNodeConfig)
-      } catch (err) {
-        global.logger.info(`config config not exists. ${envNodeConfig}`)
+  static loadJsonConfig (config: Configuration = {
+    configEnvName: `NODE_CONFIG`,
+    secretEnvName: `NODE_SECRET`
+  }): {[x: string]: any} {
+    let configFile = ``, configData = {}
+    if (config.configEnvName || config.configFilePath) {
+      if (config.configEnvName) {
+        configFile = process.env[config.configEnvName]
+      } else if (config.configFilePath) {
+        configFile = config.configFilePath
       }
-      let secret = {}
-      try {
-        secret = require(envNodeSecret)
-      } catch (err) {
-        global.logger.info(`secret config not exists. ${envNodeSecret}`)
+      if (configFile) {
+        configData = require(configFile)
       }
-      return Object.assign(config, secret)
     }
 
-    if (defaultConfigFile) {
-      return require(defaultConfigFile)
+    let secretFile = ``, secretData = {}
+    if (config.secretEnvName || config.secretFilePath) {
+      if (config.secretEnvName) {
+        secretFile = process.env[config.secretEnvName]
+      } else if (config.secretFilePath) {
+        secretFile = config.secretFilePath
+      }
+      if (secretFile) {
+        secretData = require(secretFile)
+      }
     }
 
-    const configPath = path.join(process.cwd(), `${process.env['EXE_PATH'] || 'src'}/config`)
-    const env = process.env['NODE_ENV']
-    return require(path.join(configPath, `${env}.json`))
+    if (!configFile && !secretFile) {
+      throw new Error(`unspecified config file and secret file`)
+    }
+
+    return Object.assign(configData, secretData)
+  }
+
+  static loadYamlConfig (config: Configuration = {
+    configEnvName: `NODE_CONFIG`,
+    secretEnvName: `NODE_SECRET`
+  }): {[x: string]: any} {
+    let configFile = ``, configData = {}
+    if (config.configEnvName || config.configFilePath) {
+      if (config.configEnvName) {
+        configFile = process.env[config.configEnvName]
+      } else if (config.configFilePath) {
+        configFile = config.configFilePath
+      }
+      if (configFile) {
+        configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
+      }
+    }
+
+    let secretFile = ``, secretData = {}
+    if (config.secretEnvName || config.secretFilePath) {
+      if (config.secretEnvName) {
+        secretFile = process.env[config.secretEnvName]
+      } else if (config.secretFilePath) {
+        secretFile = config.secretFilePath
+      }
+      if (secretFile) {
+        secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
+      }
+    }
+
+    if (!configFile && !secretFile) {
+      throw new Error(`unspecified config file and secret file`)
+    }
+
+    return Object.assign(configData, secretData)
   }
 }
