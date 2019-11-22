@@ -2,14 +2,6 @@
 import yaml from 'js-yaml'
 import fs from 'fs'
 
-declare global {
-  namespace NodeJS {
-    interface Global {
-      logger: any,
-    }
-  }
-}
-
 export interface Configuration {
   configFilePath?: string
   secretFilePath?: string
@@ -33,7 +25,7 @@ export default class Config {
         try {
           configData = require(configFile)
         } catch (err) {
-          global.logger.debug(err)
+          console.debug(err)
         }
       }
     }
@@ -49,7 +41,7 @@ export default class Config {
         try {
           secretData = require(secretFile)
         } catch (err) {
-          global.logger.debug(err)
+          console.debug(err)
         }
       }
     }
@@ -76,7 +68,7 @@ export default class Config {
         try {
           configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
         } catch (err) {
-          global.logger.debug(err)
+          console.debug(err)
         }
       }
     }
@@ -92,7 +84,7 @@ export default class Config {
         try {
           secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
         } catch (err) {
-          global.logger.debug(err)
+          console.debug(err)
         }
       }
     }

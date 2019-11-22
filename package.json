@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
