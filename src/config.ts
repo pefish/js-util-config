@@ -18,7 +18,8 @@ export default class Config {
     if (config.configEnvName || config.configFilePath) {
       if (config.configEnvName) {
         configFile = process.env[config.configEnvName]
-      } else if (config.configFilePath) {
+      }
+      if (!configFile && config.configFilePath) {
         configFile = config.configFilePath
       }
       if (configFile) {
@@ -34,7 +35,8 @@ export default class Config {
     if (config.secretEnvName || config.secretFilePath) {
       if (config.secretEnvName) {
         secretFile = process.env[config.secretEnvName]
-      } else if (config.secretFilePath) {
+      }
+      if (!secretFile && config.secretFilePath) {
         secretFile = config.secretFilePath
       }
       if (secretFile) {
@@ -61,7 +63,8 @@ export default class Config {
     if (config.configEnvName || config.configFilePath) {
       if (config.configEnvName) {
         configFile = process.env[config.configEnvName]
-      } else if (config.configFilePath) {
+      }
+      if (!configFile && config.configFilePath) {
         configFile = config.configFilePath
       }
       if (configFile) {
@@ -77,7 +80,8 @@ export default class Config {
     if (config.secretEnvName || config.secretFilePath) {
       if (config.secretEnvName) {
         secretFile = process.env[config.secretEnvName]
-      } else if (config.secretFilePath) {
+      }
+      if (!secretFile && config.secretFilePath) {
         secretFile = config.secretFilePath
       }
       if (secretFile) {
