@@ -26,7 +26,7 @@ export default class Config {
         try {
           configData = require(configFile)
         } catch (err) {
-          console.debug(err)
+          // console.debug(err)
         }
       }
     }
@@ -43,7 +43,7 @@ export default class Config {
         try {
           secretData = require(secretFile)
         } catch (err) {
-          console.debug(err)
+          // console.debug(err)
         }
       }
     }
@@ -71,7 +71,7 @@ export default class Config {
         try {
           configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
         } catch (err) {
-          console.debug(err)
+          // console.debug(err)
         }
       }
     }
@@ -88,7 +88,7 @@ export default class Config {
         try {
           secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
         } catch (err) {
-          console.debug(err)
+          // console.debug(err)
         }
       }
     }
