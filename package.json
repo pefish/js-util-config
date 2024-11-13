@@ -1,25 +1,24 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
-    "test": "NODE_CONFIG=`pwd`/test/config.yaml NODE_SECRET=`pwd`/test/secret1.yaml mocha --require ts-node/register src/*.test.ts",
-    "build": "rm -rf lib types && tsc && yarn tslint",
+    "test": "mocha --require ts-node/register src/*.test.ts",
+    "build": "rm -rf lib types && tsc && npm run tslint",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
-    "prepublish": "yarn build"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "js-yaml": "^3.13.1"
+    "@pefish/js-helper-mysql": "^0.2.8"
   },
   "devDependencies": {
-    "@pefish/js-node-assist": "^0.6.11",
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "@types/moment": "^2.13.0",
-    "@types/node": "^11.13.7",
-    "ts-node": "^8.1.0",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^22.9.0",
+    "ts-node": "^10.9.2",
+    "tslint": "^6.1.3",
+    "typescript": "^5.6.3",
+    "mocha": "^10.8.2"
   }
 }

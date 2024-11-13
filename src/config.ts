@@ -1,102 +1,32 @@
-
-import yaml from 'js-yaml'
-import fs from 'fs'
-
-export interface Configuration {
-  configFilePath?: string
-  secretFilePath?: string
-  configEnvName?: string
-  secretEnvName?: string
-}
+import SequelizeHelper from "@pefish/js-helper-mysql";
 
 export default class Config {
-  static loadJsonConfig (config: Configuration = {
-    configEnvName: `NODE_CONFIG`,
-    secretEnvName: `NODE_SECRET`
-  }): {[x: string]: any} {
-    let configFile = ``, configData = {}
-    if (config.configEnvName || config.configFilePath) {
-      if (config.configEnvName) {
-        configFile = process.env[config.configEnvName]
-      }
-      if (!configFile && config.configFilePath) {
-        configFile = config.configFilePath
-      }
-      if (configFile) {
-        try {
-          configData = require(configFile)
-        } catch (err) {
-          // console.debug(err)
+  static async fetchConfigsFromDb(
+    mysqlInstance: SequelizeHelper,
+    names: string[]
+  ): Promise<{
+    [x: string]: string;
+  }> {
+    // 查询数据库获取配置
+    const rows: {
+      key: string;
+      value: string;
+    }[] = await mysqlInstance.select({
+      select: "*",
+      from: "config",
+    });
+
+    // 创建一个 Map 来存储结果
+    const result: { [key: string]: string } = {};
+    for (const configName of names) {
+      for (const configResult of rows) {
+        if (configResult.key === configName) {
+          result[configName] = configResult.value;
+          break;
         }
       }
     }
 
-    let secretFile = ``, secretData = {}
-    if (config.secretEnvName || config.secretFilePath) {
-      if (config.secretEnvName) {
-        secretFile = process.env[config.secretEnvName]
-      }
-      if (!secretFile && config.secretFilePath) {
-        secretFile = config.secretFilePath
-      }
-      if (secretFile) {
-        try {
-          secretData = require(secretFile)
-        } catch (err) {
-          // console.debug(err)
-        }
-      }
-    }
-
-    if (!configFile && !secretFile) {
-      throw new Error(`unspecified config file and secret file`)
-    }
-
-    return Object.assign(configData, secretData)
-  }
-
-  static loadYamlConfig (config: Configuration = {
-    configEnvName: `NODE_CONFIG`,
-    secretEnvName: `NODE_SECRET`
-  }): {[x: string]: any} {
-    let configFile = ``, configData = {}
-    if (config.configEnvName || config.configFilePath) {
-      if (config.configEnvName) {
-        configFile = process.env[config.configEnvName]
-      }
-      if (!configFile && config.configFilePath) {
-        configFile = config.configFilePath
-      }
-      if (configFile) {
-        try {
-          configData = yaml.safeLoad(fs.readFileSync(configFile, 'utf8'))
-        } catch (err) {
-          // console.debug(err)
-        }
-      }
-    }
-
-    let secretFile = ``, secretData = {}
-    if (config.secretEnvName || config.secretFilePath) {
-      if (config.secretEnvName) {
-        secretFile = process.env[config.secretEnvName]
-      }
-      if (!secretFile && config.secretFilePath) {
-        secretFile = config.secretFilePath
-      }
-      if (secretFile) {
-        try {
-          secretData = yaml.safeLoad(fs.readFileSync(secretFile, 'utf8'))
-        } catch (err) {
-          // console.debug(err)
-        }
-      }
-    }
-
-    if (!configFile && !secretFile) {
-      throw new Error(`unspecified config file and secret file`)
-    }
-
-    return Object.assign(configData, secretData)
+    return result;
   }
 }
