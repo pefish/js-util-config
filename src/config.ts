@@ -1,8 +1,8 @@
-import SequelizeHelper from "@pefish/js-helper-mysql";
+import { Mysql } from "@pefish/js-helper-mysql";
 
 export default class Config {
   static async fetchConfigsFromDb(
-    mysqlInstance: SequelizeHelper,
+    mysqlInstance: Mysql,
     names: string[]
   ): Promise<{
     [x: string]: string;
