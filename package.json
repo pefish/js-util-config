@@ -1,6 +1,6 @@
 {
   "name": "@pefish/js-util-config",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "types": "./types/config.d.ts",
   "main": "./lib/config.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@pefish/js-helper-mysql": "^0.3.0"
+    "@pefish/js-helper-mysql": "^0.4.0"
   },
   "devDependencies": {
     "@types/chai": "^5.0.1",
